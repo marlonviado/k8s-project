@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-sevice-app
+spec:
+  selector:
+    matchLabels:
+      app: k8s-project-app
+  template:
+    metadata:
+      labels:
+        app: k8s-project-app
+    spec:
+      containers:
+      - name: k8s-project-app
+        image: mfviado/k8s-project:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "0.5"       
+        ports:
+        - containerPort: 8082
+          protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-project-svc
+spec:
+  selector:
+    app: k8s-project-app
+  ports:
+  - port: 80
+    protocol: TCP  
+    targetPort: 8082
