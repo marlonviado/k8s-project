@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-sevice-app
+  name: k8s-project-app
 spec:
   selector:
     matchLabels:
